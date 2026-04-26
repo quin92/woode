@@ -8,7 +8,7 @@ function Home() {
 
   return (
     <div className="flex flex-col h-full bg-[#1A1A1A] text-[#F5F0EB] font-sans">
-      
+
       {/* Hero Section with 3D Model */}
       <div className="relative h-[80vh] w-full flex items-center justify-center overflow-hidden">
         {/* Background elements */}
@@ -16,11 +16,11 @@ function Home() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#D4A574] via-transparent to-transparent"></div>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-12 mt-16">
-          
+
           {/* Text Content */}
           <div className="flex-1 text-center lg:text-left">
             <h1 className="font-serif text-5xl lg:text-7xl font-black leading-tight tracking-tight text-[#F5F0EB] drop-shadow-lg">
-              Nghệ thuật<br/>
+              Nghệ thuật<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4A574] to-[#8B6914]">
                 Nội thất đương đại
               </span>
@@ -29,13 +29,13 @@ function Home() {
               Khám phá bộ sưu tập nội thất cao cấp WOODÉ, nơi thiết kế tinh tế hòa quyện cùng chất liệu thượng hạng, kiến tạo không gian sống đẳng cấp.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <button 
+              <button
                 onClick={() => navigate("/products")}
                 className="px-8 py-4 bg-gradient-to-r from-[#8B6914] to-[#D4A574] text-[#1A1A1A] font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 Khám phá ngay
               </button>
-              <button 
+              <button
                 className="px-8 py-4 bg-transparent border border-[#8B6914] text-[#D4A574] font-bold rounded-full hover:bg-[#8B6914] hover:text-[#1A1A1A] transition-all duration-300"
               >
                 Về chúng tôi
@@ -46,8 +46,8 @@ function Home() {
           {/* 3D Model Display */}
           <div className="flex-1 w-full h-[400px] lg:h-[600px] relative">
             {/* The FeaturedProduct3D component handles the 3D rendering */}
-            <FeaturedProduct3D modelUrl="/models/chair-nordic.gltf" className="w-full h-full" />
-            
+            <FeaturedProduct3D modelUrl="/side_table_01_2k.gltf" className="w-full h-full" />
+
             {/* Floating badges */}
             <div className="absolute top-10 right-10 bg-[#1A1A1A]/80 backdrop-blur-md border border-[#3A3A3A] px-4 py-2 rounded-2xl animate-bounce" style={{ animationDuration: '3s' }}>
               <p className="text-[#D4A574] font-bold text-sm">Thiết kế Bắc Âu</p>
