@@ -15,7 +15,7 @@ interface RevenueChartProps {
 export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
   const chartMetrics = useMemo(() => {
     if (!data || data.length === 0) {
-      return { min: 0, max: 1, range: 1, width: 1000, height: 400, padding: 60 }
+      return { min: 0, max: 1, range: 1, width: 1200, height: 500, padding: 80 }
     }
 
     const values = data.map(d => d.total)
@@ -23,9 +23,9 @@ export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
     const maxValue = Math.max(...values)
     const rangValue = maxValue - minValue || 1
 
-    const chartWidth = 1000
-    const chartHeight = 400
-    const padding = 60
+    const chartWidth = 1200
+    const chartHeight = 500
+    const padding = 80
 
     return {
       min: minValue,
@@ -52,8 +52,10 @@ export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
   }
 
   const points = data.map((d, i) => {
-    const x = (chartMetrics.padding + (i / Math.max(data.length - 1, 1)) * (chartMetrics.width - chartMetrics.padding * 2))
-    const y = chartMetrics.height - chartMetrics.padding + chartMetrics.padding - (((d.total - chartMetrics.min) / chartMetrics.range) * (chartMetrics.height - chartMetrics.padding * 1.5))
+    const x = chartMetrics.padding + (i / Math.max(data.length - 1, 1)) * (chartMetrics.width - chartMetrics.padding * 2)
+    const plotAreaHeight = chartMetrics.height - chartMetrics.padding * 2
+    const normalizedValue = chartMetrics.range > 0 ? (d.total - chartMetrics.min) / chartMetrics.range : 0
+    const y = chartMetrics.height - chartMetrics.padding - (normalizedValue * plotAreaHeight)
     return { x, y, ...d }
   })
 
@@ -78,9 +80,9 @@ export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
               <line
                 key={`grid-${i}`}
                 x1={chartMetrics.padding}
-                y1={chartMetrics.height - chartMetrics.padding + chartMetrics.padding - ratio * (chartMetrics.height - chartMetrics.padding * 1.5)}
+                y1={chartMetrics.height - chartMetrics.padding - ratio * (chartMetrics.height - chartMetrics.padding * 2)}
                 x2={chartMetrics.width - chartMetrics.padding}
-                y2={chartMetrics.height - chartMetrics.padding + chartMetrics.padding - ratio * (chartMetrics.height - chartMetrics.padding * 1.5)}
+                y2={chartMetrics.height - chartMetrics.padding - ratio * (chartMetrics.height - chartMetrics.padding * 2)}
                 stroke="#e5e7eb"
                 strokeDasharray="5,5"
               />
@@ -109,7 +111,7 @@ export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
             {/* Y-axis labels and grid */}
             {[0, 0.25, 0.5, 0.75, 1].map((ratio, i) => {
               const value = chartMetrics.min + ratio * chartMetrics.range
-              const y = chartMetrics.height - chartMetrics.padding + chartMetrics.padding - ratio * (chartMetrics.height - chartMetrics.padding * 1.5)
+              const y = chartMetrics.height - chartMetrics.padding - ratio * (chartMetrics.height - chartMetrics.padding * 2)
               return (
                 <g key={`y-label-${i}`}>
                   <text
@@ -128,8 +130,8 @@ export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
             {(() => {
               // Tính interval để skip labels tùy theo số dữ liệu
               let interval = 1
-              if (data.length > 60) interval = Math.ceil(data.length / 10)
-              else if (data.length > 30) interval = Math.ceil(data.length / 15)
+              if (data.length > 60) interval = Math.ceil(data.length / 12)
+              else if (data.length > 30) interval = Math.ceil(data.length / 10)
               else if (data.length > 14) interval = 2
               
               return points.map((p, i) => {
@@ -140,10 +142,9 @@ export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
                   <g key={`x-label-${i}`}>
                     <text
                       x={p.x}
-                      y={chartMetrics.height - chartMetrics.padding + 40}
+                      y={chartMetrics.height - chartMetrics.padding + 35}
                       textAnchor="middle"
-                      transform={`rotate(45, ${p.x}, ${chartMetrics.height - chartMetrics.padding + 40})`}
-                      className="text-xs fill-gray-600"
+                      className="text-xs fill-gray-700 font-medium"
                     >
                       {formatDate(p.date)}
                     </text>

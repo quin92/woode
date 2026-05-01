@@ -14,6 +14,7 @@ export const ProductsList = () => {
   const [open, setOpen] = useState(false)
   const [editing, setEditing] = useState<Product | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
+  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
 
   // 3️⃣ SETUP UPDATE MUTATION
   const updateMutation = useUpdateProduct(editing?.id ?? 0)
@@ -44,6 +45,11 @@ export const ProductsList = () => {
     }
   }
 
+  // 5️⃣ HÀM TOGGLE ACTIVE VỚI CONFIRMATION
+  const handleToggleActive = (product: Product) => {
+    toggleActive(product.id)
+  }
+
   // 6️⃣ HÀM EDIT
   const handleEdit = (product: Product) => {
     setEditing(product)
@@ -68,6 +74,23 @@ export const ProductsList = () => {
 
   return (
     <div className="p-6">
+      {/* =================== NOTIFICATION TOAST =================== */}
+      {notification && (
+        <div className={`mb-4 p-4 rounded-lg flex items-center justify-between ${
+          notification.type === 'success'
+            ? 'bg-green-100 text-green-800'
+            : 'bg-red-100 text-red-800'
+        }`}>
+          <span className="font-medium">{notification.message}</span>
+          <button
+            onClick={() => setNotification(null)}
+            className="ml-4 text-lg font-bold hover:opacity-70"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* =================== HEADER =================== */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Sản phẩm</h1>
@@ -148,7 +171,7 @@ export const ProductsList = () => {
                   </td>
                   <td className="px-6 py-4 text-sm flex gap-2 justify-center flex-wrap">
                     <button
-                      onClick={() => toggleActive(product.id)}
+                      onClick={() => handleToggleActive(product)}
                       className={`text-white px-3 py-1 rounded text-xs ${
                         product.isActive 
                           ? 'bg-orange-500 hover:bg-orange-600' 

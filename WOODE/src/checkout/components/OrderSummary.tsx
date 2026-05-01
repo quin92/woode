@@ -112,8 +112,8 @@ export default function OrderSummary({
         <div className="mt-5 rounded-xl border border-[#bd992d]/30 bg-[#FFF8E6] p-4">
           <p className="text-xs font-medium leading-5 text-[#6F5411]">
             <span className="font-bold text-[#2A1E13]">Gợi ý:</span> Bạn sẽ
-            nhận {Math.floor(finalAmount / 10).toLocaleString()} điểm từ đơn
-            hàng này.
+            nhận {Math.floor(subtotal / 10).toLocaleString()} điểm từ đơn
+            hàng này. (10% của giá trị đơn hàng)
           </p>
         </div>
       )}

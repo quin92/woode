@@ -65,11 +65,16 @@ export const ProductForm = ({ initialData, onSubmit, onClose }: ProductFormProps
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
 
-    if (name === 'categoryId' || name === 'price' || name === 'weight') {
-      const numValue = value ? parseFloat(value) : 0
+    if (name === 'price' || name === 'weight') {
+      const numValue = value === '' ? 0 : parseFloat(value)
       setFormData(prev => ({
         ...prev,
-        [name]: numValue,
+        [name]: isNaN(numValue) ? 0 : numValue,
+      }))
+    } else if (name === 'categoryId') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: parseInt(value) || 0,
       }))
     } else {
       setFormData(prev => ({
@@ -111,10 +116,10 @@ export const ProductForm = ({ initialData, onSubmit, onClose }: ProductFormProps
         <input
           type="number"
           name="price"
-          value={formData.price}
+          value={formData.price || ''}
           onChange={handleChange}
           required
-          step="0.01"
+          step="1"
           min="0"
           className="w-full px-3 py-2 border rounded"
         />
@@ -182,9 +187,9 @@ export const ProductForm = ({ initialData, onSubmit, onClose }: ProductFormProps
           <input
             type="number"
             name="weight"
-            value={formData.weight}
+            value={formData.weight || ''}
             onChange={handleChange}
-            step="0.1"
+            step="1"
             min="0"
             className="w-full px-3 py-2 border rounded"
           />

@@ -36,7 +36,7 @@ export default function AppRoutes() {
 
         {/* STAFF routes */}
         <Route
-          path="/staff"
+          path="/StaffDashboard"
           element={
             <ProtectedRoute roles={["STAFF"]}>
               <MainLayout />

@@ -2,6 +2,12 @@ import { FiAward } from "react-icons/fi";
 import type { User } from "../../contexts/AuthContext";
 import { Modal } from "./Modal";
 import React from "react";
+import {
+  getTierBySpent,
+  getNextTier,
+  getAmountToNextTier,
+  getProgressToNextTier,
+} from "../../constants/tiers.constants";
 
 interface LoyaltyCardProps {
   user: User;
@@ -11,27 +17,11 @@ interface LoyaltyCardProps {
 function LoyaltyCard({ user, formatPrice }: LoyaltyCardProps) {
   const [open, setOpen] = React.useState(false);
 
-  const tiers = [
-    { key: "NORMAL", name: "Thường", min: 0, max: 9999999 },
-    { key: "SILVER", name: "Bạc", min: 10000000, max: 49999999 },
-    { key: "GOLD", name: "Vàng", min: 50000000, max: 199999999 },
-    { key: "PLATINUM", name: "Bạch Kim", min: 200000000, max: Infinity },
-  ];
-
   const spent = user.totalSpent || 0;
-
-  const currentIndex = tiers.findIndex((t) => spent >= t.min && spent <= t.max);
-
-  const currentTier = tiers[currentIndex];
-
-  const nextTier =
-    currentIndex < tiers.length - 1 ? tiers[currentIndex + 1] : null;
-
-  const progress = nextTier
-    ? ((spent - currentTier.min) / (nextTier.min - currentTier.min)) * 100
-    : 100;
-
-  const remaining = nextTier ? nextTier.min - spent : 0;
+  const currentTier = getTierBySpent(spent);
+  const nextTier = getNextTier(spent);
+  const progress = getProgressToNextTier(spent);
+  const remaining = getAmountToNextTier(spent);
 
   return (
     <div className="w-full rounded-2xl bg-[#d6d3cf] p-8 shadow-xl text-[#2A1E13]">
@@ -40,7 +30,7 @@ function LoyaltyCard({ user, formatPrice }: LoyaltyCardProps) {
         <FiAward className="text-4xl mb-2 drop-shadow-lg text-[#8F6418]" />
 
         <h1 className="text-4xl font-extrabold tracking-wide drop-shadow-lg text-[#2A1E13]">
-          {currentTier.name.toUpperCase()}
+          {currentTier.displayName.toUpperCase()}
         </h1>
 
         <p className="text-[#6F5A3A] text-sm mt-2">Hạng thành viên</p>
@@ -60,7 +50,7 @@ function LoyaltyCard({ user, formatPrice }: LoyaltyCardProps) {
               <span className="text-[#A87822] font-bold">
                 {formatPrice(remaining)}
               </span>{" "}
-              để lên hạng <span className="font-bold">{nextTier.name}</span>
+              để lên hạng <span className="font-bold">{nextTier.displayName}</span>
             </p>
           ) : (
             <p className="text-sm font-semibold text-[#A87822] mb-4 text-center">
@@ -158,15 +148,15 @@ function LoyaltyCard({ user, formatPrice }: LoyaltyCardProps) {
             <p className="font-semibold mb-1 text-[#2A1E13]">Quyền lợi</p>
 
             <ul className="text-sm text-[#6F5A3A] space-y-1">
-              <li>Tích điểm cho mỗi đơn hàng</li>
-              <li>Dùng điểm để đổi ưu đãi</li>
-              <li>Hạng càng cao, ưu đãi càng lớn</li>
+              <li>💰 Tích điểm từ mỗi đơn hàng (10% giá gốc, trước discount)</li>
+              <li>🎁 Dùng điểm để giảm giá (1.000 điểm = 1.000đ)</li>
+              <li>📈 Hạng càng cao, ưu đãi càng lớn</li>
             </ul>
           </div>
 
           {/* ===== LƯU Ý ===== */}
           <div className="text-xs text-[#6F5A3A] mb-4 text-center">
-            * Điểm và hạng sẽ được cập nhật sau mỗi đơn hàng hoàn thành
+            * Điểm chỉ được cộng khi đơn hàng hoàn thành. Hạng được tính từ các đơn giao thành công
           </div>
 
           {/* BUTTON */}

@@ -178,19 +178,39 @@ export function OrderDetailModal({ orderId, isOpen, onClose }: OrderDetailModalP
             {(order.earnedPoint !== undefined || order.usedPoint !== undefined) && (
               <div className="border-t pt-6">
                 <h3 className="text-lg font-semibold mb-4">Điểm thưởng</h3>
-                <div className="grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg">
-                  {order.earnedPoint !== undefined && (
-                    <div>
-                      <p className="text-sm text-gray-600">Điểm tích lũy</p>
-                      <p className="text-lg font-semibold text-green-600">+{order.earnedPoint}</p>
-                    </div>
-                  )}
-                  {order.usedPoint !== undefined && (
-                    <div>
-                      <p className="text-sm text-gray-600">Điểm đã sử dụng</p>
-                      <p className="text-lg font-semibold text-red-600">-{order.usedPoint}</p>
-                    </div>
-                  )}
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg">
+                    {order.earnedPoint !== undefined && (
+                      <div>
+                        <p className="text-sm text-gray-600">Điểm sẽ tích lũy</p>
+                        <p className="text-lg font-semibold text-green-600">+{order.earnedPoint}</p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          (10% giá gốc)
+                        </p>
+                      </div>
+                    )}
+                    {order.usedPoint !== undefined && order.usedPoint > 0 && (
+                      <div>
+                        <p className="text-sm text-gray-600">Điểm đã sử dụng</p>
+                        <p className="text-lg font-semibold text-red-600">-{order.usedPoint}</p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          ({order.usedPoint} điểm = {formatPrice(order.usedPoint)})
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className={`p-3 rounded-lg text-sm ${
+                    order.status === 'COMPLETED' 
+                      ? 'bg-green-50 border border-green-200 text-green-700'
+                      : 'bg-yellow-50 border border-yellow-200 text-yellow-700'
+                  }`}>
+                    {order.status === 'COMPLETED' ? (
+                      <p>✓ Điểm đã được cộng vào tài khoản khách hàng</p>
+                    ) : (
+                      <p>⏳ Điểm sẽ được cộng khi đơn hàng hoàn thành (status = COMPLETED)</p>
+                    )}
+                  </div>
                 </div>
               </div>
             )}

@@ -161,6 +161,15 @@ function MyOrders() {
     return item.basePrice * item.quantity;
   };
 
+  const getOrderSubtotal = (order: Order) => {
+    return order.items.reduce((sum, item) => sum + (item.basePrice * item.quantity), 0);
+  };
+
+  const getEarnedPoints = (order: Order) => {
+    const subtotal = getOrderSubtotal(order);
+    return Math.floor(subtotal * 0.1); // 10% của giá gốc
+  };
+
   const formatTime = (date: string) =>
     new Date(date).toLocaleTimeString("vi-VN", {
       hour: "2-digit",
@@ -431,16 +440,33 @@ function MyOrders() {
                 </div> 
                 
                 <div className="rounded-2xl bg-[#1F1C18] border border-[#4A4035] p-6">
-                  <p className="text-xs uppercase tracking-wider text-[#E0B84F] mb-3">Điểm thưởng</p>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-[#E0B84F]">Đã sử dụng</span>
-                      <span className="font-semibold text-[#F5F0EB]">{selectedOrder.usedPoint}</span>
-                    </div>
-                    <div className="flex justify-between items-center pt-2 border-t border-[#4A4035]">
-                      <span className="text-sm text-[#E0B84F]">Tích lũy thêm</span>
-                      <span className="font-bold text-[#4A7C59]">+{selectedOrder.earnedPoint}</span>
-                    </div>
+                  <p className="text-xs uppercase tracking-wider text-[#E0B84F] mb-4">Điểm thưởng</p>
+                  <div className="space-y-3">
+                    {selectedOrder.usedPoint > 0 && (
+                      <div className="flex justify-between items-center pb-3 border-b border-[#4A4035]">
+                        <span className="text-sm text-[#E0B84F]">Điểm đã sử dụng</span>
+                        <span className="font-semibold text-[#F5F0EB]">-{selectedOrder.usedPoint}</span>
+                      </div>
+                    )}
+                    {getEarnedPoints(selectedOrder) > 0 && (
+                      <div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-[#E0B84F]">Sẽ tích lũy thêm</span>
+                          <span className="font-bold text-[#4A7C59]">+{getEarnedPoints(selectedOrder)}</span>
+                        </div>
+                        <p className="text-xs text-[#E0B84F] mt-1">(10% giá gốc = {formatPrice(getEarnedPoints(selectedOrder))})</p>
+                      </div>
+                    )}
+                    {selectedOrder.status === "COMPLETED" && (
+                      <div className="pt-2 border-t border-[#4A4035] text-xs text-green-500">
+                        ✓ Điểm đã được cộng vào tài khoản
+                      </div>
+                    )}
+                    {selectedOrder.status !== "COMPLETED" && (
+                      <div className="pt-2 border-t border-[#4A4035] text-xs text-yellow-600">
+                        ⏳ Điểm sẽ được cộng khi đơn hàng hoàn thành
+                      </div>
+                    )}
                   </div>
                 </div> 
               </div> 

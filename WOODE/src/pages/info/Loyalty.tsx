@@ -2,6 +2,12 @@ import { FiAward } from "react-icons/fi";
 import React from "react";
 import { Modal } from "../../profile/components/Modal";
 import { useAuth } from "../../contexts/AuthContext";
+import {
+  getTierBySpent,
+  getNextTier,
+  getAmountToNextTier,
+  getProgressToNextTier,
+} from "../../constants/tiers.constants";
 
 export default function Loyalty() {
   const [open, setOpen] = React.useState(false);
@@ -22,27 +28,11 @@ export default function Loyalty() {
     return value.toLocaleString("vi-VN");
   };
 
-  const tiers = [
-    { key: "NORMAL", name: "Thường", min: 0, max: 9999999, discount: 0 },
-    { key: "SILVER", name: "Bạc", min: 10000000, max: 49999999, discount: 0 },
-    { key: "GOLD", name: "Vàng", min: 50000000, max: 199999999, discount: 5 },
-    { key: "PLATINUM", name: "Bạch Kim", min: 200000000, max: Infinity, discount: 10 },
-  ];
-
   const spent = userData.totalSpent;
-
-  const currentIndex = tiers.findIndex((t) => spent >= t.min && spent <= t.max);
-
-  const currentTier = tiers[currentIndex];
-
-  const nextTier =
-    currentIndex < tiers.length - 1 ? tiers[currentIndex + 1] : null;
-
-  const progress = nextTier
-    ? ((spent - currentTier.min) / (nextTier.min - currentTier.min)) * 100
-    : 100;
-
-  const remaining = nextTier ? nextTier.min - spent : 0;
+  const currentTier = getTierBySpent(spent);
+  const nextTier = getNextTier(spent);
+  const progress = getProgressToNextTier(spent);
+  const remaining = getAmountToNextTier(spent);
 
   return (
     <div className="max-w-4xl mx-auto py-12 px-6 mt-20">
@@ -52,7 +42,7 @@ export default function Loyalty() {
           <FiAward className="text-4xl mb-2 drop-shadow-lg text-[#8F6418]" />
 
           <h1 className="text-4xl font-extrabold tracking-wide drop-shadow-lg text-[#2A1E13]">
-            {currentTier.name.toUpperCase()}
+            {currentTier.displayName.toUpperCase()}
           </h1>
 
           <p className="text-[#6F5A3A] text-sm mt-2">
@@ -79,7 +69,7 @@ export default function Loyalty() {
                 <span className="text-[#A87822] font-bold">
                   {formatPrice(remaining)}
                 </span>{" "}
-                để lên hạng <span className="font-bold">{nextTier.name}</span>
+                để lên hạng <span className="font-bold">{nextTier.displayName}</span>
               </p>
             ) : (
               <p className="text-sm font-semibold text-[#A87822] mb-4 text-center">
@@ -178,7 +168,7 @@ export default function Loyalty() {
             <p className="font-semibold mb-1 text-[#2A1E13]">Quyền lợi</p>
 
             <ul className="text-sm text-[#6F5A3A] space-y-1">
-              <li>💰 Tích điểm từ mỗi đơn hàng (10% giá trị)</li>
+              <li>💰 Tích điểm từ mỗi đơn hàng (10% giá gốc, trước discount)</li>
               <li>🎁 Dùng điểm để giảm giá (1.000 điểm = 1.000đ)</li>
               <li>📈 VÀNG: giảm 5% cho mỗi đơn</li>
               <li>👑 BẠCH KIM: giảm 10% cho mỗi đơn</li>

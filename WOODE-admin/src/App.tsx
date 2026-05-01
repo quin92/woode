@@ -49,10 +49,12 @@ function App() {
           path="/StaffDashboard"
           element={
             <ProtectedRoute roles={["STAFF"]}>
-              <StaffDashboard />
+              <MainLayout />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<StaffDashboard />} />
+        </Route>
 
         <Route path="/unauthorized" element={<div>Không có quyền truy cập</div>} />
       </Routes>

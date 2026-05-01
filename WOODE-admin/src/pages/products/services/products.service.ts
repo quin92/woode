@@ -3,7 +3,7 @@ import type { Product, CreateProductDTO, UpdateProductDTO } from '../types'
 
 // get all
 export const getProducts = async (): Promise<Product[]> => {
-  const response = await axiosClient.get<Product[]>('/products')
+  const response = await axiosClient.get<Product[]>('/products/admin/list')
   return response.data
 }
 
