@@ -9,7 +9,7 @@ export default function PurchasePolicy() {
     },
     {
       title: "2. Phương thức thanh toán",
-      icon: <FiCreditCard className="text-blue-500" />,
+      icon: <FiCreditCard className="text-[#D4AF37]" />,
       content: "Chúng tôi hỗ trợ đa dạng phương thức thanh toán: Thanh toán tiền mặt khi nhận hàng (COD), Ví điện tử, hoặc chuyển khoản qua cổng VNPAY để đảm bảo tính tiện lợi và an toàn."
     },
     {
@@ -27,8 +27,8 @@ export default function PurchasePolicy() {
   return (
     <div className="max-w-4xl mx-auto py-12 px-6 mt-20">
       <div className="text-center mb-16">
-        <h1 className="text-4xl font-black text-[#086136] mb-4">Chính sách mua hàng</h1>
-        <p className="text-neutral-600">Những hướng dẫn và quy định giúp bạn có trải nghiệm mua sắm tốt nhất tại Woodé.</p>
+        <h1 className="text-4xl font-black text-[#D4AF37] mb-4">Chính sách mua hàng</h1>
+        <p className="text-neutral-300">Những hướng dẫn và quy định giúp bạn có trải nghiệm mua sắm tốt nhất tại Woodé.</p>
       </div>
 
       <div className="grid grid-cols-1 gap-8 mb-12">
@@ -36,7 +36,7 @@ export default function PurchasePolicy() {
           <div key={idx} className="bg-white p-8 rounded-3xl shadow-sm border border-neutral-100 flex gap-6 hover:shadow-md transition">
             <div className="text-3xl shrink-0 mt-1">{sec.icon}</div>
             <div>
-              <h3 className="text-xl font-bold mb-3">{sec.title}</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#3c2718]">{sec.title}</h3>
               <p className="text-neutral-500 leading-relaxed">{sec.content}</p>
             </div>
           </div>

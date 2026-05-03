@@ -4,15 +4,15 @@ export default function Contact() {
   return (
     <div className="max-w-6xl mx-auto py-12 px-6 mt-20">
       <div className="text-center mb-16">
-        <h1 className="text-4xl font-black text-[#8B6F47] mb-4">Liên hệ với WOODE</h1>
-        <p className="text-neutral-600">Chúng tôi luôn sẵn sàng lắng nghe mọi phản hồi và đóng góp từ bạn.</p>
+        <h1 className="text-4xl font-black text-[#D4AF37] mb-4">Liên hệ với WOODE</h1>
+        <p className="text-neutral-300">Chúng tôi luôn sẵn sàng lắng nghe mọi phản hồi và đóng góp từ bạn.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* INFO */}
         <div className="space-y-8">
           <div>
-            <h3 className="text-xl font-bold mb-6 text-neutral-800">Thông tin liên hệ</h3>
+            <h3 className="text-xl font-bold mb-6 text-[#fff6e7]">Thông tin liên hệ</h3>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 bg-[#F5E6D3] text-[#8B6F47] rounded-lg flex items-center justify-center shrink-0">
@@ -25,7 +25,7 @@ export default function Contact() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 bg-[#F5E6D3] text-[#8B6F47] rounded-lg flex items-center justify-center shrink-0">
                   <FiPhone />
                 </div>
                 <div>
@@ -35,7 +35,7 @@ export default function Contact() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-[#8B6F47]/10 text-[#8B6F47] rounded-lg flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 bg-[#F5E6D3] text-[#8B6F47] rounded-lg flex items-center justify-center shrink-0">
                   <FiMail />
                 </div>
                 <div>
@@ -47,7 +47,7 @@ export default function Contact() {
           </div>
 
           <div className="p-6 bg-neutral-100 rounded-2xl">
-            <h4 className="font-bold mb-2">Giờ làm việc</h4>
+            <h4 className="font-bold mb-2 text-[#684125]">Giờ làm việc</h4>
             <div className="text-sm text-neutral-600 flex justify-between uppercase tracking-wider">
               <span>Thứ 2 - Chủ Nhật</span>
               <span>07:00 - 22:00</span>
@@ -57,7 +57,7 @@ export default function Contact() {
 
         {/* FORM */}
         <div className="lg:col-span-2 bg-white p-8 rounded-3xl shadow-sm border border-neutral-100">
-          <h3 className="text-xl font-bold mb-8">Gửi tin nhắn cho chúng tôi</h3>
+          <h3 className="text-xl font-bold mb-8 text-[#684125]">Gửi tin nhắn cho chúng tôi</h3>
           <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
