@@ -552,7 +552,7 @@ function MyOrders() {
                             Sẽ tích lũy thêm
                           </span>
 
-                          <span className="font-bold text-[#4A7C59]">
+                          <span className="font-bold text-[#F5F0EB]">
                             +{formatPoint(getEarnedPoints(selectedOrder))} điểm
                           </span>
                         </div>

@@ -73,17 +73,17 @@ const getStatusCardStyle = (status: OrderStatus) => {
       {/* HEADER */}
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-neutral-400">Mã đơn</p>
+          <p className="text-xs text-neutral-700">Mã đơn</p>
           <p className="font-bold text-neutral-900">
             {formatOrderCode(order.id)}
           </p>
-          <p className="text-xs text-neutral-500">
+          <p className="text-xs text-neutral-700">
             {new Date(order.createdAt).toLocaleDateString("vi-VN")}
           </p>
         </div>
 
         <div className="text-right">
-          <p className="text-xs text-neutral-400">Tổng</p>
+          <p className="text-xs text-neutral-700">Tổng</p>
           <p className="font-bold text-[#D4AF37]">
             {formatPrice(order.total)}
           </p>
@@ -94,15 +94,15 @@ const getStatusCardStyle = (status: OrderStatus) => {
       <div className="mt-3 space-y-1 text-sm">
         {visibleItems.map((item, index) => (
           <div key={index} className="flex justify-between">
-            <span className="truncate">{item.productName}</span>
-            <span className="text-neutral-600">
+            <span className="truncate font-semibold text-[#2A211A]">{item.productName}</span>
+            <span className="text-neutral-700">
               {formatPrice(item.basePrice)}
             </span>
           </div>
         ))}
 
         {remaining > 0 && (
-          <div className="text-xs text-neutral-500">
+          <div className="text-xs text-neutral-700">
             +{remaining} món khác
           </div>
         )}
@@ -110,7 +110,7 @@ const getStatusCardStyle = (status: OrderStatus) => {
 
       {/* FOOT */}
       <div className="mt-4 flex items-center justify-between text-xs">
-        <span className="text-neutral-500">
+        <span className="text-neutral-700">
           {order.items.length} món
         </span>
 

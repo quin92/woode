@@ -278,7 +278,7 @@ async function main() {
       address: customer.address || 'Bình Thạnh, TP.HCM',
       total: 6700000,
       status: OrderStatus.PENDING,
-      earnedPoint: 67,
+      earnedPoint: 670000,
       usedPoint: 0,
     },
   })
@@ -331,8 +331,8 @@ async function main() {
       address: 'Quận 3, TP.HCM',
       total: 12800000,
       status: OrderStatus.CONFIRMED,
-      earnedPoint: 128,
-      usedPoint: 100,
+      earnedPoint: 1280000,
+      usedPoint: 100000,
     },
   })
 
@@ -383,7 +383,7 @@ async function main() {
       address: 'Quận 7, TP.HCM',
       total: 13100000,
       status: OrderStatus.COMPLETED,
-      earnedPoint: 131,
+      earnedPoint: 1310000,
       usedPoint: 0,
     },
   })

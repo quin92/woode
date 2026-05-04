@@ -14,15 +14,19 @@ export default function Loyalty() {
   const { user } = useAuth();
 
   // Use real user data from context, fallback to defaults if not logged in
-  const userData = user ? {
-    totalSpent: user.totalSpent || 0,
-    totalOrders: user.totalOrders || 0,
-    loyaltyPoint: Math.floor((user.totalSpent || 0) * 0.1),
-  } : {
-    totalSpent: 0,
-    totalOrders: 0,
-    loyaltyPoint: 0,
-  };
+  const userData = user
+  ? {
+      totalSpent: user.totalSpent || 0,
+      totalOrders: user.totalOrders || 0,
+
+      // Điểm hiện có trong tài khoản
+      loyaltyPoint: user.loyaltyPoint || 0,
+    }
+  : {
+      totalSpent: 0,
+      totalOrders: 0,
+      loyaltyPoint: 0,
+    };
 
   const formatPrice = (value: number) => {
     return value.toLocaleString("vi-VN");
