@@ -27,6 +27,9 @@ type OrderItem = {
   quantity: number
   productName: string
   basePrice: number
+  product?: {
+    imageUrl: string | null
+  }
 }
 
 type Payment = {
@@ -551,9 +554,16 @@ export default function Dashboard() {
                     className="rounded-2xl border p-4 shadow-sm"
                   >
                     <div className="flex gap-4">
-                      {/* Fake image / fallback */}
-                      <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-slate-100 text-xs text-slate-400">
-                        Ảnh SP
+                      <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-slate-100 overflow-hidden">
+                        {item.product?.imageUrl ? (
+                          <img 
+                            src={item.product.imageUrl} 
+                            alt={item.productName} 
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <div className="text-xs text-slate-400">Ảnh SP</div>
+                        )}
                       </div>
 
                       <div className="flex-1">

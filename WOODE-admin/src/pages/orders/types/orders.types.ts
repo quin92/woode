@@ -15,6 +15,9 @@ export interface OrderItem {
   productName: string
   basePrice: number
   quantity: number
+  product?: {
+    imageUrl: string | null
+  }
 }
 
 // ========================

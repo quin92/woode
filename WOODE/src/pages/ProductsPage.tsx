@@ -7,7 +7,7 @@ import { useCategories } from "../hooks/useCategories";
 import { useBestSellingProducts } from "../hooks/useBestSellingProducts";
 import { useAuth } from "../contexts/AuthContext";
 
-const PAGE_SIZE = 9;
+const PAGE_SIZE = 6;
 
 function ProductsPage() {
   const { category } = useParams();

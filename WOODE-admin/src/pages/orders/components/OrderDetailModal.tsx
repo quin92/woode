@@ -144,24 +144,37 @@ export function OrderDetailModal({
                   order.items.map((item) => (
                     <div
                       key={item.id}
-                      className="border rounded-lg p-4 bg-gray-50"
+                      className="border rounded-lg p-4 bg-gray-50 flex gap-4"
                     >
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <p className="font-semibold">{item.productName}</p>
-                          <p className="text-sm text-gray-600">
-                            ID: {item.productId}
+                      {item.product?.imageUrl ? (
+                        <img
+                          src={item.product.imageUrl}
+                          alt={item.productName}
+                          className="h-20 w-20 object-cover rounded-md border bg-white"
+                        />
+                      ) : (
+                        <div className="h-20 w-20 flex items-center justify-center bg-gray-200 rounded-md text-[10px] text-gray-400">
+                          No image
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <p className="font-semibold">{item.productName}</p>
+                            <p className="text-sm text-gray-600">
+                              ID: {item.productId}
+                            </p>
+                          </div>
+
+                          <p className="font-semibold text-blue-600">
+                            x{item.quantity}
                           </p>
                         </div>
 
-                        <p className="font-semibold text-blue-600">
-                          x{item.quantity}
-                        </p>
-                      </div>
-
-                      <div className="flex justify-between text-sm mb-2">
-                        <span className="text-gray-600">Giá cơ bản:</span>
-                        <span>{formatPrice(item.basePrice)}</span>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Giá cơ bản:</span>
+                          <span>{formatPrice(item.basePrice)}</span>
+                        </div>
                       </div>
                     </div>
                   ))
