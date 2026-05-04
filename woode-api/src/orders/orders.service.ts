@@ -320,7 +320,7 @@ export class OrdersService {
 
       // Chỉ khi đơn COMPLETED mới cộng điểm vào user
       if (status === 'COMPLETED') {
-        await prisma.user.update({
+        const updatedUser = await prisma.user.update({
           where: { id: order.userId },
           data: {
             totalOrders: { increment: 1 },
@@ -328,16 +328,28 @@ export class OrdersService {
             loyaltyPoint: { increment: order.earnedPoint },
           },
         });
+        
+        // Emit realtime loyalty points update
+        this.ordersGateway.emitLoyaltyPointsUpdated(
+          order.userId,
+          updatedUser.loyaltyPoint,
+        );
       }
 
       // Nếu hủy đơn thì hoàn lại điểm đã dùng
       if (status === 'CANCELLED' && order.usedPoint > 0) {
-        await prisma.user.update({
+        const updatedUser = await prisma.user.update({
           where: { id: order.userId },
           data: {
             loyaltyPoint: { increment: order.usedPoint },
           },
         });
+        
+        // Emit realtime loyalty points update
+        this.ordersGateway.emitLoyaltyPointsUpdated(
+          order.userId,
+          updatedUser.loyaltyPoint,
+        );
       }
 
       return updatedOrder;

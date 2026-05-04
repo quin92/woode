@@ -21,3 +21,20 @@ export const getSocket = (): Socket => {
 
   return socketInstance;
 };
+
+export const setupLoyaltyPointsListener = (
+  userId: number,
+  callback: (points: number) => void
+) => {
+  const socket = getSocket();
+
+  socket.on(`loyalty-points-${userId}`, (data) => {
+    console.log("⭐ Loyalty points updated:", data.loyaltyPoints);
+    callback(data.loyaltyPoints);
+  });
+};
+
+export const removeLoyaltyPointsListener = (userId: number) => {
+  const socket = getSocket();
+  socket.off(`loyalty-points-${userId}`);
+};

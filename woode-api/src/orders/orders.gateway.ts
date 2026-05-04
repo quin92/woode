@@ -53,4 +53,11 @@ export class OrdersGateway
   emitOrderUpdated(order: any) {
     this.server.emit('order-updated', order);
   }
+
+  emitLoyaltyPointsUpdated(userId: number, loyaltyPoints: number) {
+    this.server.emit(`loyalty-points-${userId}`, {
+      loyaltyPoints,
+      updatedAt: new Date(),
+    });
+  }
 }
