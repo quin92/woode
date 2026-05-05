@@ -43,6 +43,7 @@ model Product {
   modelUrl    String?          // Đường dẫn file .gltf cho 3D viewer
   dimensions  String?          // Kích thước (VD: "120x60x75 cm")
   weight      Float?           // Cân nặng (kg)
+  stock       Int              @default(0)
 
   category    Category         @relation(fields: [categoryId], references: [id])
   orderItems  OrderItem[]

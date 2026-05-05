@@ -50,4 +50,9 @@ export class UpdateProductDto {
   @IsNumber({}, { message: 'weight phải là số' })
   @Min(0, { message: 'Cân nặng không được âm' })
   weight?: number;
+
+  @IsOptional()
+  @IsNumber({}, { message: 'stock phải là số' })
+  @Min(0, { message: 'Tồn kho không được âm' })
+  stock?: number;
 }

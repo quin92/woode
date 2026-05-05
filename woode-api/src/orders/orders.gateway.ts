@@ -60,4 +60,13 @@ export class OrdersGateway
       updatedAt: new Date(),
     });
   }
+
+  emitStockAlert(product: any) {
+    this.server.emit('stock-alert', {
+      id: product.id,
+      name: product.name,
+      stock: product.stock,
+      imageUrl: product.imageUrl,
+    });
+  }
 }

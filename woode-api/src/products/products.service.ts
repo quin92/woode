@@ -34,6 +34,7 @@ export class ProductsService {
         modelUrl: data.modelUrl,
         dimensions: data.dimensions,
         weight: data.weight,
+        stock: data.stock,
       },
       include: {
         category: true,
@@ -169,6 +170,7 @@ export class ProductsService {
         modelUrl: data.modelUrl,
         dimensions: data.dimensions,
         weight: data.weight,
+        stock: data.stock,
       },
       include: {
         category: true,

@@ -182,6 +182,26 @@ export class OrdersService {
             );
           }
 
+          // Kiểm tra tồn kho
+          if (product.stock < item.quantity) {
+            throw new BadRequestException(
+              `Sản phẩm "${product.name}" không đủ tồn kho (còn ${product.stock}, yêu cầu ${item.quantity})`,
+            );
+          }
+
+          // Trừ tồn kho
+          const updatedProduct = await prisma.product.update({
+            where: { id: product.id },
+            data: {
+              stock: { decrement: item.quantity },
+            },
+          });
+
+          // Nếu hết hàng thì bắn thông báo realtime cho admin
+          if (updatedProduct.stock === 0) {
+            this.ordersGateway.emitStockAlert(updatedProduct);
+          }
+
           await prisma.orderItem.create({
             data: {
               orderId: order.id,
@@ -304,6 +324,45 @@ export class OrdersService {
     }
 
     const updated = await this.prisma.$transaction(async (prisma) => {
+      // Nếu hủy đơn thì hoàn lại điểm đã dùng và hoàn lại tồn kho
+      if (status === 'CANCELLED') {
+        // Hoàn lại tồn kho cho các sản phẩm trong đơn
+        for (const item of order.items) {
+          await prisma.product.update({
+            where: { id: item.productId },
+            data: {
+              stock: { increment: item.quantity },
+            },
+          });
+        }
+
+        // Cập nhật trạng thái thanh toán đang chờ sang THẤT BẠI/HỦY
+        await prisma.payment.updateMany({
+          where: {
+            orderId: id,
+            status: 'PENDING',
+          },
+          data: {
+            status: 'FAILED',
+          },
+        });
+
+        if (order.usedPoint > 0) {
+          const updatedUser = await prisma.user.update({
+            where: { id: order.userId },
+            data: {
+              loyaltyPoint: { increment: order.usedPoint },
+            },
+          });
+
+          // Emit realtime loyalty points update
+          this.ordersGateway.emitLoyaltyPointsUpdated(
+            order.userId,
+            updatedUser.loyaltyPoint,
+          );
+        }
+      }
+
       const updatedOrder = await prisma.order.update({
         where: { id },
         data: { status },
@@ -326,22 +385,6 @@ export class OrdersService {
             totalOrders: { increment: 1 },
             totalSpent: { increment: order.total },
             loyaltyPoint: { increment: order.earnedPoint },
-          },
-        });
-        
-        // Emit realtime loyalty points update
-        this.ordersGateway.emitLoyaltyPointsUpdated(
-          order.userId,
-          updatedUser.loyaltyPoint,
-        );
-      }
-
-      // Nếu hủy đơn thì hoàn lại điểm đã dùng
-      if (status === 'CANCELLED' && order.usedPoint > 0) {
-        const updatedUser = await prisma.user.update({
-          where: { id: order.userId },
-          data: {
-            loyaltyPoint: { increment: order.usedPoint },
           },
         });
         

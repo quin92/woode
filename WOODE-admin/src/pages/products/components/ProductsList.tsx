@@ -126,9 +126,11 @@ export const ProductsList = () => {
               <th className="px-6 py-3 text-left text-sm font-semibold">#</th>
               <th className="px-6 py-3 text-left text-sm font-semibold">Tên</th>
               <th className="px-6 py-3 text-left text-sm font-semibold">Giá</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold">Tồn kho</th>
               <th className="px-6 py-3 text-left text-sm font-semibold">Danh mục</th>
               <th className="px-6 py-3 text-left text-sm font-semibold">Mô tả</th>
               <th className="px-6 py-3 text-left text-sm font-semibold">Hình ảnh</th>
+              <th className="px-6 py-3 text-center text-sm font-semibold">Trạng thái</th>
               <th className="px-6 py-3 text-center text-sm font-semibold">Hành động</th>
             </tr>
           </thead>
@@ -145,6 +147,11 @@ export const ProductsList = () => {
                   <td className="px-6 py-4 text-sm text-gray-700">{index + 1}</td>
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">{product.name}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">${product.price}</td>
+                  <td className="px-6 py-4 text-sm">
+                    <span className={`font-bold ${product.stock === 0 ? 'text-red-500' : 'text-blue-600'}`}>
+                      {product.stock}
+                    </span>
+                  </td>
                   <td className="px-6 py-4 text-sm text-gray-600">ID: {product.categoryId}</td>
                   <td className="px-6 py-4 text-sm text-gray-600 truncate max-w-xs">
                     {product.description || '-'}

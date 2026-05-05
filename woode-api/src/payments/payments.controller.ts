@@ -52,7 +52,7 @@ export class PaymentsController {
     private readonly prisma: PrismaService,
     private readonly ordersGateway: OrdersGateway,
     private readonly ordersService: OrdersService,
-  ) {}
+  ) { }
 
   @Post('vnpay/initiate')
   async initiateVNPayCheckout(
@@ -507,10 +507,6 @@ export class PaymentsController {
 
     if (normalized === 'VNPAY') {
       return 'VNPAY';
-    }
-
-    if (normalized === 'STRIPE') {
-      return 'STRIPE';
     }
 
     throw new BadRequestException(`Unsupported payment method: ${method}`);

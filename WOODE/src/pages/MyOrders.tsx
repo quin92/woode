@@ -609,7 +609,9 @@ function MyOrders() {
                             payment.status === "SUCCESS"
                               ? "bg-[#8B6F47]/20 text-[#D4AF37] border border-[#D4AF37]/30"
                               : payment.status === "FAILED"
-                              ? "bg-[#8B6F47]/10 text-[#D4AF37] border border-[#D4AF37]/30"
+                              ? "bg-red-900/20 text-red-500 border border-red-500/30"
+                              : payment.status === "REFUNDED"
+                              ? "bg-gray-800 text-gray-400 border border-gray-600"
                               : payment.status === "PENDING"
                               ? "bg-amber-900/30 text-amber-500 border border-amber-500/30"
                               : "bg-[#4A4035] text-[#E0B84F]"
@@ -618,7 +620,9 @@ function MyOrders() {
                           {payment.status === "SUCCESS"
                             ? "Thành công"
                             : payment.status === "FAILED"
-                            ? "Thất bại"
+                            ? (selectedOrder.status === "CANCELLED" ? "Đã hủy" : "Thất bại")
+                            : payment.status === "REFUNDED"
+                            ? "Đã hoàn tiền"
                             : payment.status === "PENDING"
                             ? "Chờ xử lý"
                             : payment.status}

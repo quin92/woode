@@ -186,6 +186,18 @@ export default function Dashboard() {
       socket.off("connect")
       socket.off("new-order")
       socket.off("order-updated")
+      socket.off("stock-alert")
+    }
+  }, [])
+
+  useEffect(() => {
+    socket.on("stock-alert", (product: any) => {
+      console.log("  Stock alert:", product)
+      alert(`⚠️ CẢNH BÁO: Sản phẩm "${product.name}" đã hết hàng (Stock: 0)!`)
+    })
+
+    return () => {
+      socket.off("stock-alert")
     }
   }, [])
 

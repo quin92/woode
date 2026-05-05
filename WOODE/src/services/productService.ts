@@ -21,6 +21,7 @@ export interface Product {
   modelUrl?: string;       // Đường dẫn file .gltf cho 3D viewer
   dimensions?: string;     // Kích thước (VD: "120x60x75 cm")
   weight?: number;         // Cân nặng (kg)
+  stock: number;           // Số lượng tồn kho
   createdAt?: string;
   updatedAt?: string;
   isDeleted?: boolean;

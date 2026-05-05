@@ -140,18 +140,27 @@ function ProductDetail() {
                 <div className="flex items-center gap-2 rounded-full border border-[#4A4035] bg-[#1F1C18] px-4 py-3">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="flex h-6 w-6 items-center justify-center text-[#E0B84F] transition hover:text-[#E0B84F]"
+                    disabled={product.stock === 0}
+                    className="flex h-6 w-6 items-center justify-center text-[#E0B84F] transition hover:text-[#E0B84F] disabled:opacity-30"
                   >
                     <FiMinus size={18} />
                   </button>
-                  <span className="w-6 text-center font-semibold text-[#F5F0EB]">{quantity}</span>
+                  <span className="w-6 text-center font-semibold text-[#F5F0EB]">
+                    {product.stock === 0 ? 0 : quantity}
+                  </span>
                   <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="flex h-6 w-6 items-center justify-center text-[#E0B84F] transition hover:text-[#E0B84F]"
+                    onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
+                    disabled={product.stock === 0 || quantity >= product.stock}
+                    className="flex h-6 w-6 items-center justify-center text-[#E0B84F] transition hover:text-[#E0B84F] disabled:opacity-30"
                   >
                     <FiPlus size={18} />
                   </button>
                 </div>
+                {product.stock > 0 && (
+                  <p className="mt-2 text-xs text-[#E0B84F]">
+                    Còn lại {product.stock} sản phẩm
+                  </p>
+                )}
               </div>
 
               <div className="rounded-[24px] border border-[#4A4035] bg-[#1F1C18] p-5">
@@ -174,14 +183,19 @@ function ProductDetail() {
             <div className="mt-8 flex flex-wrap gap-3">
               <button
                 onClick={handleAddToCart}
-                className="relative flex-1 rounded-full bg-gradient-to-r from-[#D8A94A] to-[#E0B84F] px-6 py-4 text-sm font-bold text-[#1A1A1A] shadow-md transition-all hover:scale-[1.02] hover:shadow-lg"
+                disabled={product.stock === 0}
+                className={`relative flex-1 rounded-full px-6 py-4 text-sm font-bold shadow-md transition-all ${
+                  product.stock === 0
+                    ? "bg-[#333] text-gray-500 cursor-not-allowed border border-gray-600"
+                    : "bg-gradient-to-r from-[#D8A94A] to-[#E0B84F] text-[#1A1A1A] hover:scale-[1.02] hover:shadow-lg"
+                }`}
               >
                 <span className="inline-flex items-center justify-center gap-2">
                   <FiShoppingCart size={18} />
-                  Thêm vào giỏ hàng
+                  {product.stock === 0 ? "Hết hàng" : "Thêm vào giỏ hàng"}
                 </span>
 
-                {showAddedMessage && (
+                {showAddedMessage && product.stock > 0 && (
                   <div className="absolute inset-0 flex items-center justify-center rounded-full bg-[#E0B84F]">
                     <div className="flex items-center gap-2 text-white">
                       <FiCheck size={18} />

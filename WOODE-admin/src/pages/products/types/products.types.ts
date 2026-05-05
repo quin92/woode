@@ -8,6 +8,7 @@ export interface Product {
   modelUrl?: string
   dimensions?: string
   weight?: number
+  stock: number
   isActive: boolean
   isDeleted: boolean
   createdAt: string
@@ -23,6 +24,7 @@ export interface CreateProductDTO {
   modelUrl?: string
   dimensions?: string
   weight?: number
+  stock: number
 }
 
 export interface UpdateProductDTO {
@@ -34,4 +36,5 @@ export interface UpdateProductDTO {
   modelUrl?: string
   dimensions?: string
   weight?: number
+  stock?: number
 }

@@ -21,6 +21,7 @@ export const ProductForm = ({ initialData, onSubmit, onClose }: ProductFormProps
     modelUrl: '',
     dimensions: '',
     weight: 0,
+    stock: 0,
   })
 
   const handleUpload = useCallback((url: string) => {
@@ -38,6 +39,7 @@ export const ProductForm = ({ initialData, onSubmit, onClose }: ProductFormProps
         modelUrl: initialData.modelUrl || '',
         dimensions: initialData.dimensions || '',
         weight: initialData.weight || 0,
+        stock: initialData.stock || 0,
       })
     } else {
       setFormData({
@@ -49,6 +51,7 @@ export const ProductForm = ({ initialData, onSubmit, onClose }: ProductFormProps
         modelUrl: '',
         dimensions: '',
         weight: 0,
+        stock: 0,
       })
     }
   }, [initialData])
@@ -65,7 +68,7 @@ export const ProductForm = ({ initialData, onSubmit, onClose }: ProductFormProps
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
 
-    if (name === 'price' || name === 'weight') {
+    if (name === 'price' || name === 'weight' || name === 'stock') {
       const numValue = value === '' ? 0 : parseFloat(value)
       setFormData(prev => ({
         ...prev,
@@ -192,6 +195,19 @@ export const ProductForm = ({ initialData, onSubmit, onClose }: ProductFormProps
             step="1"
             min="0"
             className="w-full px-3 py-2 border rounded"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-2">Số lượng tồn kho <span className="text-red-500">*</span></label>
+          <input
+            type="number"
+            name="stock"
+            value={formData.stock || 0}
+            onChange={handleChange}
+            step="1"
+            min="0"
+            required
+            className="w-full px-3 py-2 border rounded font-semibold text-blue-600"
           />
         </div>
       </div>
